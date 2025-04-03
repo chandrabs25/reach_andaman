@@ -1,0 +1,48 @@
+# --- Dependencies ---
+node_modules/
+vendor/
+venv/
+env/
+Pods/
+
+# --- Build Output ---
+build/
+dist/
+target/
+*.o
+*.exe
+*.dll
+*.class
+
+# --- Logs and Cache ---
+*.log
+npm-debug.log*
+yarn-error.log*
+.npm/
+.cache/
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# --- IDE / Editor Files ---
+.idea/
+.vscode/
+*.sublime-workspace
+*.swp
+*~
+
+# --- Sensitive Information ---
+.env
+credentials.*
+*.key
+config/local.*
+
+# --- Python ---
+__pycache__/
+*.pyc
+
+# --- Exception Example (if you needed to track a specific file in an ignored dir)
+# !config/local.example.yml
+.next/
