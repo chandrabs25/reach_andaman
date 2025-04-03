@@ -4,7 +4,7 @@ import FacebookProvider from 'next-auth/providers/facebook';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { db } from '@/lib/database';
 import bcrypt from 'bcryptjs';
-
+export const runtime = 'edge';
 export const authOptions = {
   providers: [
     GoogleProvider({
