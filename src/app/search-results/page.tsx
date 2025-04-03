@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -19,6 +19,19 @@ interface SearchResult {
 }
 
 export default function SearchResultsPage() {
+  return (
+    <Suspense fallback={
+      <div className="flex justify-center items-center py-20">
+        <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+        <span className="ml-2 text-lg">Loading...</span>
+      </div>
+    }>
+      <SearchResults />
+    </Suspense>
+  );
+}
+
+function SearchResults() {
   const searchParams = useSearchParams();
   const query = searchParams.get('q') || '';
   const destination = searchParams.get('destination') || '';
@@ -154,7 +167,7 @@ export default function SearchResultsPage() {
         setLoading(false);
       }
     };
-
+    
     fetchSearchResults();
   }, [query, destination, dates, travelers]);
 
