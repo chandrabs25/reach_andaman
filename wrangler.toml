@@ -1,5 +1,5 @@
 #:schema node_modules/wrangler/config-schema.json
-
+name = "reachandaman"
 # Compatibility settings (may be inferred by Pages, but safe to keep)
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
