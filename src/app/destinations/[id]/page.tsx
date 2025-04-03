@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-
+export const runtime = 'edge';
 export default function DestinationDetail() {
   const params = useParams();
   const [destination, setDestination] = useState(null);

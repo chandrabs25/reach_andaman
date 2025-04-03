@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
-
+export const runtime = 'edge';
 // Search API endpoint
 export async function GET(request: NextRequest) {
   try {

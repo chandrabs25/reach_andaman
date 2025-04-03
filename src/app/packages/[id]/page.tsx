@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Calendar, Clock, Users, Check, Info } from 'lucide-react';
-
+export const runtime = 'edge';
 export default function ItineraryPage() {
   const [selectedDay, setSelectedDay] = useState(1);
   

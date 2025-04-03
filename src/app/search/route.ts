@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { redirect } from 'next/navigation';
-
+export const runtime = 'edge';
 // This is a route handler to handle direct requests to /search
 // It redirects to the search results page with the query parameters
 export async function GET(request: NextRequest) {

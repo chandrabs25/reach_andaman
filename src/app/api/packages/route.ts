@@ -2,7 +2,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
-
+export const runtime = 'edge';
 // Get all packages
 export async function GET(request: NextRequest) {
   try {

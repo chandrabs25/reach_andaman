@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import RazorpayPayment from '@/components/RazorpayPayment';
-
+export const runtime = 'edge';
 export default function PaymentPage({ 
   params 
 }: { 
