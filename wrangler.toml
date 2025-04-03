@@ -1,17 +1,16 @@
 #:schema node_modules/wrangler/config-schema.json
-name = "andaman-travel"
-main = ".open-next/worker.js"
+
+# Compatibility settings (may be inferred by Pages, but safe to keep)
 compatibility_date = "2024-09-23"
 compatibility_flags = ["nodejs_compat"]
 
-[assets]
-directory = ".open-next/assets"
-binding = "ASSETS"
-
+# Bindings (This is the primary reason to use wrangler.toml with Pages)
 [[d1_databases]]
-binding = "DB"
-database_name = "random_id"
+binding = "DB" # The variable name accessible in your code
+database_name = "random_id" # The D1 database name in your Cloudflare account
 database_id = "10183848-4cc7-4198-b8c7-1374015ab09c"
 
-# wrangler.toml
-name = 'andaman-travel-test1'
+# REMOVED: name = "..." (Handled by Pages project name)
+# REMOVED: main = ".open-next/worker.js" (Handled by Pages preset/adapter)
+# REMOVED: [assets] section (Handled by Pages preset/adapter)
+# REMOVED: Duplicate name entry at the bottom
