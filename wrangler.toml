@@ -9,7 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 binding = "DB" # The variable name accessible in your code
 database_name = "random_id" # The D1 database name in your Cloudflare account
 database_id = "10183848-4cc7-4198-b8c7-1374015ab09c"
-
+pages_build_output_dir=".next"
 # REMOVED: name = "..." (Handled by Pages project name)
 # REMOVED: main = ".open-next/worker.js" (Handled by Pages preset/adapter)
 # REMOVED: [assets] section (Handled by Pages preset/adapter)
