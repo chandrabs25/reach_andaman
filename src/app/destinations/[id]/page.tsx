@@ -1,147 +1,97 @@
-
+"use client"; // Add this line at the top
 
 import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
-export const runtime = 'edge';
-export default function DestinationDetail() {
-  const params = useParams();
+import { MapPin, Star, ArrowRight } from 'lucide-react';
+
+export default function DestinationPage() {
   const [destination, setDestination] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const params = useParams();
+  const destinationId = params.id;
 
   useEffect(() => {
-    // In a real implementation, this would fetch from the API
-    // For now, we'll use mock data based on the ID
     const fetchDestination = async () => {
       try {
-        // This would be an API call in a real implementation
-        // const response = await fetch(`/api/destinations/${params.id}`);
-        // const data = await response.json();
-        
-        // Mock data for demonstration
-        const mockDestinations = {
-          'havelock-island': {
-            id: 'havelock-island',
-            name: 'Havelock Island',
-            description: 'Home to Radhanagar Beach, one of Asia\'s best beaches with pristine white sands and crystal clear waters.',
-            image: '/images/havelock.jpg',
-            highlights: ['Radhanagar Beach', 'Elephant Beach', 'Kalapathar Beach'],
-            activities: ['Scuba Diving', 'Snorkeling', 'Kayaking'],
-            bestTimeToVisit: 'October to May',
-            howToReach: 'Ferry from Port Blair (2 hours)'
-          },
-          'neil-island': {
-            id: 'neil-island',
-            name: 'Neil Island',
-            description: 'Known for its pristine beaches and natural bridge formation, perfect for a relaxing getaway.',
-            image: '/images/neil.jpg',
-            highlights: ['Natural Bridge', 'Bharatpur Beach', 'Laxmanpur Beach'],
-            activities: ['Snorkeling', 'Glass Bottom Boat Ride', 'Cycling'],
-            bestTimeToVisit: 'October to May',
-            howToReach: 'Ferry from Port Blair (1.5 hours) or Havelock (1 hour)'
-          },
-          'port-blair': {
-            id: 'port-blair',
-            name: 'Port Blair',
-            description: 'The capital city with historical Cellular Jail and other colonial remnants.',
-            image: '/images/port_blair.jpg',
-            highlights: ['Cellular Jail', 'Ross Island', 'Corbyn\'s Cove Beach'],
-            activities: ['Historical Tours', 'Museum Visits', 'Shopping'],
-            bestTimeToVisit: 'October to May',
-            howToReach: 'Direct flights from major Indian cities'
-          },
-          'baratang-island': {
-            id: 'baratang-island',
-            name: 'Baratang Island',
-            description: 'Famous for limestone caves and mud volcanoes.',
-            image: '/images/baratang.jpg',
-            highlights: ['Limestone Caves', 'Mud Volcanoes', 'Mangrove Creeks'],
-            activities: ['Cave Exploration', 'Boat Rides', 'Nature Walks'],
-            bestTimeToVisit: 'November to April',
-            howToReach: 'Ferry from Port Blair (3 hours)'
-          }
-        };
-        
-        // Get destination based on ID parameter
-        const destinationData = mockDestinations[params.id] || null;
-        setDestination(destinationData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching destination:', error);
-        setLoading(false);
+        const response = await fetch(`/api/destinations/${destinationId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch destination');
+        }
+        const data = await response.json();
+        setDestination(data.data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchDestination();
-  }, [params.id]);
+  }, [destinationId]);
 
-  if (loading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (isLoading) {
+    return <div className="text-center">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center">Error: {error}</div>;
   }
 
   if (!destination) {
-    return <div className="min-h-screen flex items-center justify-center">Destination not found</div>;
+    return <div className="text-center">Destination not found</div>;
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <div className="relative h-[50vh] w-full">
-        <Image 
-          src={destination.image} 
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-4">{destination.name}</h1>
+      <div className="relative h-96 w-full mb-4">
+        <Image
+          src={destination.image_url}
           alt={destination.name}
           fill
-          style={{ objectFit: 'cover' }}
-          priority
+          className="object-cover rounded-lg"
         />
-        <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
-          <h1 className="text-4xl md:text-6xl font-bold text-white text-center">{destination.name}</h1>
-        </div>
       </div>
-
-      <div className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-2xl font-bold mb-4">About {destination.name}</h2>
-          <p className="text-gray-700 mb-6">{destination.description}</p>
-          
-          <h3 className="text-xl font-semibold mb-2">Highlights</h3>
-          <ul className="list-disc pl-5 mb-6">
-            {destination.highlights.map((highlight, index) => (
-              <li key={index} className="text-gray-700 mb-1">{highlight}</li>
-            ))}
-          </ul>
-          
-          <h3 className="text-xl font-semibold mb-2">Popular Activities</h3>
-          <ul className="list-disc pl-5 mb-6">
-            {destination.activities.map((activity, index) => (
-              <li key={index} className="text-gray-700 mb-1">{activity}</li>
-            ))}
-          </ul>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-xl font-semibold mb-2">Best Time to Visit</h3>
-              <p className="text-gray-700">{destination.bestTimeToVisit}</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-semibold mb-2">How to Reach</h3>
-              <p className="text-gray-700">{destination.howToReach}</p>
+      <div className="flex items-center mb-4">
+        <MapPin className="h-4 w-4 mr-2" />
+        <p className="text-gray-600">{destination.location}</p>
+      </div>
+      <p className="text-gray-700 mb-4">{destination.description}</p>
+      <h2 className="text-2xl font-semibold mb-2">Highlights</h2>
+      <ul className="list-disc list-inside text-gray-700 mb-4">
+        {destination.highlights && destination.highlights.map((highlight, index) => (
+          <li key={index}>{highlight}</li>
+        ))}
+      </ul>
+      <h2 className="text-2xl font-semibold mb-2">Activities</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+        {destination.activities && destination.activities.map((activity) => (
+          <div key={activity.id} className="border p-4 rounded-lg">
+            <h3 className="font-semibold">{activity.name}</h3>
+            <p className="text-gray-600">{activity.description}</p>
+          </div>
+        ))}
+      </div>
+      <h2 className="text-2xl font-semibold mb-2">Nearby Accommodations</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {destination.accommodations && destination.accommodations.map((accommodation) => (
+          <div key={accommodation.id} className="border p-4 rounded-lg">
+            <h3 className="font-semibold">{accommodation.name}</h3>
+            <p className="text-gray-600">{accommodation.type}</p>
+            <div className="flex items-center mt-2">
+              <Star className="h-4 w-4 text-yellow-500 mr-1" />
+              <p className="text-gray-600">{accommodation.rating}</p>
             </div>
           </div>
-        </div>
-        
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold mb-4">Packages Including {destination.name}</h2>
-          <p className="text-gray-700">Explore our curated packages that include visits to {destination.name}.</p>
-          
-          {/* This would be a list of packages in a real implementation */}
-          <div className="mt-4">
-            <Link href="/packages" className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 inline-block">
-              View Packages
-            </Link>
-          </div>
-        </div>
+        ))}
       </div>
+      <Link href="/destinations" className="mt-4 inline-flex items-center text-blue-500 hover:underline">
+        <ArrowRight className="h-4 w-4 mr-1" />
+        Back to Destinations
+      </Link>
     </div>
   );
 }

@@ -3,12 +3,10 @@ export const runtime = 'edge';
 export async function GET(request: NextRequest) {
   try {
     // Get query parameters
-    const { searchParams } = new URL(request.url);
-    const packageId = searchParams.get('packageId');
-    const startDate = searchParams.get('startDate');
-    const endDate = searchParams.get('endDate');
-    const guests = searchParams.get('guests');
-    
+   const packageId = request.nextUrl.searchParams.get('packageId');
+    const startDate = request.nextUrl.searchParams.get('startDate');
+    const endDate = request.nextUrl.searchParams.get('endDate');
+    const guests = request.nextUrl.searchParams.get('guests');
     if (!packageId || !startDate || !endDate || !guests) {
       return NextResponse.json(
         { message: 'Missing required parameters: packageId, startDate, endDate, guests' },

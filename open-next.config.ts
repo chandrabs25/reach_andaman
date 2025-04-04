@@ -21,7 +21,9 @@ const config = {
       proxyExternalRequest: "fetch",
     },
   },
-
+  experimental:{
+    forceEdge: true
+  },
   dangerous: {
     enableCacheInterception: false,
   },
