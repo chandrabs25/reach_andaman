@@ -1,9 +1,9 @@
-'use client';
+
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { MapPin, Calendar, Users, Star, Clock, ArrowRight } from 'lucide-react';
-
+export const runtime = 'edge';
 export default function Packages() {
   const [filters, setFilters] = useState({
     destination: '',

@@ -1,9 +1,9 @@
-'use client';
+
 
 import { useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Calendar, Users, CreditCard, Check, AlertTriangle } from 'lucide-react';
-
+export const runtime = 'edge';
 export default function BookingPage() {
   const [formData, setFormData] = useState({
     firstName: '',

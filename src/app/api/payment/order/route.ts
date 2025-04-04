@@ -1,6 +1,6 @@
 import Razorpay from 'razorpay';
 import { NextRequest, NextResponse } from 'next/server';
-
+export const runtime = 'edge';
 // Default test keys for development environment
 const DEFAULT_KEY_ID = 'rzp_test_default12345';
 const DEFAULT_KEY_SECRET = 'defaultsecret12345';

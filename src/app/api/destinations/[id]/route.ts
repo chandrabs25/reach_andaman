@@ -1,8 +1,8 @@
-'use server';
+
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
-
+export const runtime = 'edge';
 // Get a specific destination by ID
 export async function GET(
   request: NextRequest,

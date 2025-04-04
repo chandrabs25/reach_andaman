@@ -1,9 +1,8 @@
-'use server';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
 import bcrypt from 'bcryptjs';
-
+export const runtime = 'edge';
 // Register a new user
 export async function POST(request: NextRequest) {
   try {

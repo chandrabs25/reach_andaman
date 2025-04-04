@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import { NextRequest, NextResponse } from 'next/server';
-
+export const runtime = 'edge';
 // Function to generate signature for verification
 const generateSignature = (
   razorpayOrderId: string,

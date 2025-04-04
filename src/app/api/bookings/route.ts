@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
+export const runtime = 'edge';
 // In a real implementation, this would interact with a database
 // For now, we'll use in-memory storage for demonstration
 let bookings = [];
