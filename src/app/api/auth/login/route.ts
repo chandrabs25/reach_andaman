@@ -1,14 +1,23 @@
+// Path: .\src\app\api\auth\login\route.ts
 'use server';
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
 import bcrypt from 'bcryptjs';
 
+// Define an interface for expected request body for clarity (optional but good practice)
+interface LoginRequestBody {
+  email: string;
+  password: string;
+}
+
 // Login with credentials
 export async function POST(request: NextRequest) {
   try {
-    const { email, password } = await request.json();
-    
+    // --- FIX: Add type assertion here ---
+    const { email, password } = await request.json() as LoginRequestBody;
+    // --- End of FIX ---
+
     // Validation
     if (!email || !password) {
       return NextResponse.json(
@@ -16,37 +25,44 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
-    
-    // Find user
-    const users = await db.execute(
-      'SELECT * FROM users WHERE email = ?',
-      [email]
-    );
-    
-    if (!users || users.length === 0) {
+
+    // Find user using D1 syntax
+    const user = await db
+      .prepare('SELECT * FROM users WHERE email = ?')
+      .bind(email)
+      .first<any>(); // Use <any> or a specific User type if defined
+
+    if (!user) {
       return NextResponse.json(
         { success: false, message: 'Invalid credentials' },
         { status: 401 }
       );
     }
-    
-    const user = users[0];
-    
-    // Check password
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    
+
+    // Check password - Ensure user.password_hash exists and is the correct field name
+    if (!user.password_hash) {
+         // Handle cases where user might exist but has no password (e.g., OAuth user)
+         return NextResponse.json(
+           { success: false, message: 'Invalid credentials (no password set)' },
+           { status: 401 }
+         );
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password_hash);
+
     if (!isPasswordValid) {
       return NextResponse.json(
         { success: false, message: 'Invalid credentials' },
         { status: 401 }
       );
     }
-    
-    // Remove password from response
-    const { password: _, ...userWithoutPassword } = user;
-    
-    return NextResponse.json({ 
-      success: true, 
+
+    // Remove password hash from response
+    // Use the correct field name 'password_hash' from your schema
+    const { password_hash, ...userWithoutPassword } = user;
+
+    return NextResponse.json({
+      success: true,
       message: 'Login successful',
       data: userWithoutPassword
     });

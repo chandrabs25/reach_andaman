@@ -9,7 +9,11 @@ compatibility_flags = ["nodejs_compat"]
 binding = "DB" # The variable name accessible in your code
 database_name = "random_id" # The D1 database name in your Cloudflare account
 database_id = "10183848-4cc7-4198-b8c7-1374015ab09c"
-pages_build_output_dir=".next"
+[[kv_namespaces]]
+binding = "CACHE"  # This is the default name OpenNext's Cache.kv() looks for
+id = "YOUR_KV_NAMESPACE_ID" 
+# Optional: Add a preview ID if you have a separate KV for previews
+# preview_id = "YOUR_KV_PREVIEW_NAMESPACE_ID"
 # REMOVED: name = "..." (Handled by Pages project name)
 # REMOVED: main = ".open-next/worker.js" (Handled by Pages preset/adapter)
 # REMOVED: [assets] section (Handled by Pages preset/adapter)

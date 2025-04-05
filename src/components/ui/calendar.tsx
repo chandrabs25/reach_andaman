@@ -59,15 +59,13 @@ function Calendar({
         day_hidden: "invisible",
         ...classNames,
       }}
+      // --- FIX: Restore original Shadcn structure for components ---
       components={{
-        IconLeft: ({ className, ...props }) => (
-          <ChevronLeft className={cn("h-4 w-4", className)} {...props} />
-        ),
-        IconRight: ({ className, ...props }) => (
-          <ChevronRight className={cn("h-4 w-4", className)} {...props} />
-        ),
+        IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />, // Don't pass/spread props here
+        IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />, // Don't pass/spread props here
       }}
-      {...props}
+      // --- End FIX ---
+      {...props} // Pass remaining props
     />
   )
 }

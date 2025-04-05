@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 // Metadata needs to be in a separate file since this is now a client component
 const siteMetadata = {
-  title: 'Andaman Travel Platform',
+  title: 'Reach Andaman',
   description: 'Discover the beauty of Andaman Islands with our comprehensive travel platform',
 };
 
