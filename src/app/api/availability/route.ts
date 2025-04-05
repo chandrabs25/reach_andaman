@@ -1,6 +1,6 @@
 // Path: .\src\app\api\availability\route.ts
 import { NextRequest, NextResponse } from 'next/server';
-
+export const dynamic = 'force-dynamic';
 // --- Define the type for the keys of unavailablePackages ---
 type UnavailablePackageKey = 'pkg_havelock_adventure' | 'pkg_neil_island_getaway';
 

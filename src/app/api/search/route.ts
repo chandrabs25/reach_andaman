@@ -1,9 +1,9 @@
 // Path: .\src\app\api\search\route.ts
-'use server';
+
 
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/database';
-
+export const dynamic = 'force-dynamic';
 // --- Define interfaces for expected search result structures ---
 interface DestinationSearchResult {
   id: number | string;
